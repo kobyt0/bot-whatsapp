@@ -1,0 +1,173 @@
+{
+  "120363429957539697@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363430160853790@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363411725732847@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363419290897755@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363426059485643@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": true,
+    "mutes": {}
+  },
+  "120363432354603011@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363431363521892@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363406710521932@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363432324626948@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363420455507403@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363363047289198@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363430894806174@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363418609887679@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363431127149690@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363418534252691@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363142032645868@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363386380317607@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363417302513809@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363430957096631@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363426602782551@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363432941345155@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363401327902014@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363422744980773@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363419784819180@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363412770242378@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363403234019847@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {}
+  },
+  "120363430283001472@g.us": {
+    "botEnabled": true,
+    "onlyAdmin": false,
+    "antilink": false,
+    "mutes": {},
+    "welcome": true,
+    "goodbye": true,
+    "disabledCommands": [],
+    "welcomeText": null,
+    "goodbyeText": "Adiós {user} vuelve pronto a {group} ahora somos {count}",
+    "bannerFile": "120363430283001472_g_us.jpg",
+    "economy": true,
+    "prefix": "!",
+    "coinName": "Kobins"
+  }
+}

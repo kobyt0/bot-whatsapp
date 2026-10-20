@@ -1,0 +1,83 @@
+module.exports = {
+    // Prefijos aceptados para los comandos
+    prefixes: ['!', '/'],
+
+    // Respaldo manual: IDs o números que SIEMPRE se consideran admins del bot.
+    // Pega aquí lo que te muestre !whoami en "Tu ID" (ej: '203951186116623@lid')
+    // o tu número ('573001234567'). Déjalo vacío si la detección automática funciona.
+    owners: [],
+
+    // Tiempo mínimo (ms) entre avisos iguales al mismo usuario en el mismo grupo.
+    // Evita que el bot inunde el chat si alguien insiste. Pon 0 para avisar siempre.
+    noticeCooldownMs: 10000,
+
+    // Ruta a Google Chrome. Vacío = se detecta solo. Chrome (no el Chromium de Puppeteer)
+    // es necesario para que los videos se envíen como video y no como documento.
+    chromePath: '',
+
+    // Sticker de texto estilo "brat" (ajusta aquí el aspecto sin tocar el código)
+    textSticker: {
+        defaultColor: 'blanco',  // blanco | verde | negro | azul
+        blurPx: 1.5,             // desenfoque (0 = nítido)
+        narrow: 0.84,            // 1 = ancho normal; menor = letras más estrechas (efecto Arial Narrow)
+        lineHeight: 1.08,        // separación entre líneas
+        padding: 20,             // margen en px (el sticker mide 512x512)
+        maxFont: 160,            // tamaño máximo de letra en px
+        minFont: 16              // tamaño mínimo de letra en px
+    },
+
+    // Economía (todo ajustable). Los montos están en coins; los tiempos en milisegundos.
+    economy: {
+        currencyDefault: 'coins',
+        work: { min: 300, max: 2000, cooldownMs: 5 * 60 * 1000 },
+        slut: { min: 500, max: 5000, cooldownMs: 10 * 60 * 1000, failChance: 0.3, fineMin: 200, fineMax: 1500 },
+        crime: { min: 1000, max: 10000, cooldownMs: 15 * 60 * 1000, failChance: 0.4, fineMin: 500, fineMax: 4000 },
+        rob: {
+            percent: 0.25,          // fracción del EFECTIVO de la víctima
+            maxSteal: null,         // tope por robo (null = sin tope)
+            minTargetCash: 200,     // efectivo mínimo de la víctima para poder robarle
+            inactiveMs: 2 * 3600e3, // la víctima debe llevar este tiempo sin escribir
+            cooldownMs: 6 * 3600e3,
+            failChance: 0.4,
+            fineMin: 300,
+            fineMax: 3000
+        },
+        daily: {
+            // día 1 -> 3.000 ... día 10 -> 30.000; desde el día 10 se queda en 30.000
+            table: Array.from({ length: 10 }, (_, i) => 3000 * (i + 1)),
+            cooldownMs: 24 * 3600e3, // tiempo mínimo entre reclamos
+            maxGapMs: 48 * 3600e3    // si pasa más de esto, la racha vuelve al día 1
+        }
+    },
+
+    // Descargas y playlists
+    media: {
+        ytdlpPath: 'yt-dlp',      // o la ruta completa a yt-dlp.exe
+        ffmpegPath: 'ffmpeg',     // o la ruta completa a ffmpeg.exe
+        ffprobePath: '',          // vacío = se deduce de ffmpegPath
+        jsRuntimes: 'node',       // YouTube exige un runtime JS. '' si usas Deno (es el predeterminado)
+        cookiesFile: '',          // ruta a un cookies.txt (solo si YouTube pide verificación anti-bots)
+
+        maxConcurrent: 2,         // descargas simultáneas
+        maxQueue: 6,              // máximo de descargas en espera
+        userCooldownMs: 20000,    // espera entre descargas del mismo usuario
+        addCooldownMs: 2000,      // espera entre !addlist del mismo usuario
+
+        maxVideoMin: 15,          // duración máxima de videos
+        maxAudioMin: 15,          // duración máxima de una canción
+        maxVideoMB: 60,           // tamaño máximo de video a enviar
+        maxAudioMB: 50,           // tamaño máximo de audio a enviar
+
+        tts: {
+            defaultLang: 'es',    // idioma por defecto de !playaudio
+            maxChars: 400,        // texto máximo por audio
+            cooldownMs: 8000      // espera entre audios del mismo usuario
+        },
+
+        playlists: {
+            maxPerUser: 10,
+            maxSongs: 20,
+            maxMixMin: 40         // duración total máxima de una playlist (mix)
+        }
+    }
+};
