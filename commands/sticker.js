@@ -1,13 +1,27 @@
 const { MessageMedia } = require('whatsapp-web.js');
+const eco = require('../lib/economy');
 const { renderTextSticker, parseColor } = require('../lib/textsticker');
 const { prefixes } = require('../config');
 
 const META = { stickerName: 'Mi Bot', stickerAuthor: 'Creado en VS Code' };
 
+// Autor y pack propios (!setmeta); en privado o sin configurar se usan los de por defecto
+async function metaFor({ client, chat, sender, senderExtra }) {
+    if (!chat.isGroup) return META;
+    const u = await eco.findUser(client, chat.id._serialized, sender, senderExtra);
+    if (!u || !u.stickerMeta) return META;
+    return {
+        stickerName: u.stickerMeta.pack || META.stickerName,
+        stickerAuthor: u.stickerMeta.author || META.stickerAuthor
+    };
+}
+
 module.exports = {
     name: 'sticker',
     aliases: ['s'],
-    async run({ client, msg, chat, rest }) {
+    async run(ctx) {
+        const { client, msg, chat, rest } = ctx;
+        const meta = await metaFor(ctx);
         let targetMsg = msg;
         let quoted = null;
 
@@ -20,7 +34,7 @@ module.exports = {
         if (targetMsg.hasMedia) {
             try {
                 const media = await targetMsg.downloadMedia();
-                if (media) await chat.sendMessage(media, { sendMediaAsSticker: true, ...META });
+                if (media) await chat.sendMessage(media, { sendMediaAsSticker: true, ...meta });
             } catch (err) {
                 console.error('Error al crear el sticker:', err);
                 msg.reply('Ocurrió un error al procesar el sticker.');
@@ -44,7 +58,7 @@ module.exports = {
         try {
             const png = await renderTextSticker(client, text, { color });
             const media = new MessageMedia('image/png', png, 'sticker.png');
-            await chat.sendMessage(media, { sendMediaAsSticker: true, ...META });
+            await chat.sendMessage(media, { sendMediaAsSticker: true, ...meta });
         } catch (err) {
             console.error('Error al crear el sticker de texto:', err);
             msg.reply(`❌ ${err.userMessage || 'No pude crear el sticker de texto.'}`);

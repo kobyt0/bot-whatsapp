@@ -29,9 +29,9 @@ module.exports = {
     // Economía (todo ajustable). Los montos están en coins; los tiempos en milisegundos.
     economy: {
         currencyDefault: 'coins',
-        work: { min: 300, max: 2000, cooldownMs: 5 * 60 * 1000 },
-        slut: { min: 500, max: 5000, cooldownMs: 10 * 60 * 1000, failChance: 0.3, fineMin: 200, fineMax: 1500 },
-        crime: { min: 1000, max: 10000, cooldownMs: 15 * 60 * 1000, failChance: 0.4, fineMin: 500, fineMax: 4000 },
+        work: { min: 300, max: 2000, cooldownMs: 5 * 60 * 1000 }, // 5 minutos
+        slut: { min: 500, max: 5000, cooldownMs: 10 * 60 * 1000, failChance: 0.3, fineMin: 200, fineMax: 1500 }, // 10 minutos
+        crime: { min: 1000, max: 10000, cooldownMs: 15 * 60 * 1000, failChance: 0.4, fineMin: 500, fineMax: 4000 }, // 15 minutos
         rob: {
             percent: 0.25,          // fracción del EFECTIVO de la víctima
             maxSteal: null,         // tope por robo (null = sin tope)
@@ -48,6 +48,37 @@ module.exports = {
             cooldownMs: 24 * 3600e3, // tiempo mínimo entre reclamos
             maxGapMs: 48 * 3600e3    // si pasa más de esto, la racha vuelve al día 1
         }
+    },
+
+    // Perfil
+    profile: {
+        proposalMs: 60000, // tiempo que dura una propuesta de !marry
+        maxDesc: 200,
+        maxFav: 40,
+        maxMeta: 30,       // autor y pack de los stickers
+        listLimit: 60      // líneas máximas en !allbirthdays
+    },
+
+    // Casino. Cuando ganas recibes el doble de lo apostado (ganas lo que apostaste).
+    casino: {
+        minBet: 100,
+        maxBet: null, // tope por apuesta (null = sin tope)
+        dado: { minBet: 500 },
+        raspa: { dailyLimit: 10, winChance: 0.4, symbols: ['🍋', '🍎', '🍒', '🍇', '🍉', '⭐'] },
+        bj: { timeoutMs: 30000, naturalPayout: 1.5 }, // el blackjack natural paga 3:2
+        poker: { timeoutMs: 30000 },
+        ladder: {
+            timeoutMs: 60000, // sin actividad: se cobra automáticamente lo que llevas
+            // multiplicador del escalón y probabilidad de lograr subir a él
+            steps: [
+                { mult: 1.5, chance: 0.65 },
+                { mult: 2, chance: 0.55 },
+                { mult: 3, chance: 0.45 },
+                { mult: 5, chance: 0.35 },
+                { mult: 10, chance: 0.25 }
+            ]
+        },
+        bet: { windowMs: 60000, maxPlayers: 10, minBet: 100 }
     },
 
     // Descargas y playlists
