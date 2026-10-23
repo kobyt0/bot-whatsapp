@@ -11,7 +11,8 @@ const TOGGLES = [
     { name: 'antilink', key: 'antilink', label: 'Antilink', needsBotAdmin: true },
     { name: 'welcome', key: 'welcome', label: 'Mensaje de bienvenida' },
     { name: 'goodbye', key: 'goodbye', label: 'Mensaje de despedida' },
-    { name: 'economy', key: 'economy', label: 'Economía' }
+    { name: 'economy', key: 'economy', label: 'Economía' },
+    { name: 'gacha', key: 'gacha', label: 'Sistema gacha' }
 ];
 
 module.exports = TOGGLES.map((t) => ({

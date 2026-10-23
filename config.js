@@ -59,6 +59,28 @@ module.exports = {
         listLimit: 60      // líneas máximas en !allbirthdays
     },
 
+    // Gacha de personajes
+    gacha: {
+        roll: { max: 1, windowMs: 2 * 3600e3 },          // 1 roll cada 2 horas
+        claim: { cooldownMs: 2 * 3600e3, windowMs: 60000 }, // 1 claim cada 2 horas; una tirada se puede reclamar 60 s
+        tradeMs: 60000,                                  // duración de una propuesta de !trade
+        pageSize: 10,
+        // cut: fracción acumulada del ranking de popularidad; weight: probabilidad relativa en un roll;
+        // base: valor en coins (varía ±20% según la posición dentro del nivel)
+        tiers: {
+            legendario: { cut: 0.03, weight: 3, base: 120000, label: '🟡 Legendario' },
+            epico: { cut: 0.13, weight: 10, base: 30000, label: '🟣 Épico' },
+            raro: { cut: 0.4, weight: 25, base: 8000, label: '🔵 Raro' },
+            comun: { cut: 1, weight: 62, base: 2000, label: '⚪ Común' }
+        }
+    },
+
+    // Warns
+    warns: {
+        maxReason: 100, // caracteres máximos del motivo
+        listLimit: 40   // líneas máximas en !allwarns
+    },
+
     // Casino. Cuando ganas recibes el doble de lo apostado (ganas lo que apostaste).
     casino: {
         minBet: 100,

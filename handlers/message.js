@@ -102,6 +102,12 @@ module.exports = (client) => async (msg) => {
                 return;
             }
 
+            // Gacha apagado con !gacha off
+            if (command && command.gacha && !ctx.settings.gacha) {
+                await ctx.notify('gachaoff', M.gachaOff);
+                return;
+            }
+
             // Economía apagada con !economy off
             if (command && command.economy && !ctx.settings.economy) {
                 await ctx.notify('economyoff', M.economyOff);

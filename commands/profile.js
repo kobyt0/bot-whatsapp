@@ -1,6 +1,8 @@
 const eco = require('../lib/economy');
 const P = require('../lib/profile');
+const { MessageMedia } = require('whatsapp-web.js');
 const { profilePic } = require('../lib/avatar');
+const avatarStore = require('../lib/avatarstore');
 const { resolveTargets } = require('../lib/targets');
 const { prefixes, profile: cfg } = require('../config');
 const p = prefixes[0];
@@ -111,6 +113,19 @@ const setmeta = {
     }
 };
 
+// La foto que subió la persona con !setpic; si no hay, la de su WhatsApp
+async function picFor(client, u, id, extra) {
+    const custom = avatarStore.getPath(u);
+    if (custom) {
+        try {
+            return MessageMedia.fromFilePath(custom);
+        } catch (err) {
+            console.error('[perfil] no pude leer la foto guardada:', err.message);
+        }
+    }
+    return profilePic(client, id, extra);
+}
+
 // ---------- perfil ----------
 async function target(ctx) {
     const targets = await resolveTargets(ctx.msg);
@@ -153,7 +168,7 @@ const profile = {
         const caption = lines.join('\n');
         const opts = { quotedMessageId: msg.id._serialized, mentions };
 
-        const pic = await profilePic(client, t.id, t.extra);
+        const pic = await picFor(client, u, t.id, t.extra);
         if (pic) {
             try {
                 return await chat.sendMessage(pic, { ...opts, caption });
@@ -174,8 +189,10 @@ const getpic = {
         const targets = await resolveTargets(msg);
         const id = targets[0] || ctx.sender;
         const name = await eco.nameOf(client, id);
+        const extra = targets[0] ? [] : ctx.senderExtra;
+        const u = await eco.getUser(client, gidOf(ctx), id, extra);
 
-        const pic = await profilePic(client, id, targets[0] ? [] : ctx.senderExtra);
+        const pic = await picFor(client, u, id, extra);
         if (!pic) return msg.reply(`📷 No pude obtener la foto de ${name}: no tiene o la tiene privada.`);
         return chat.sendMessage(pic, { caption: `📸 Foto de perfil de ${name}`, quotedMessageId: msg.id._serialized });
     }
