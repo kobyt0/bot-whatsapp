@@ -23,7 +23,7 @@ const sell = {
     economy: true,
     run: needsData(async (ctx) => {
         const { msg, rest, settings } = ctx;
-        const usage = `Uso: ${p}sell <personaje> [precio]\nEjemplo: ${p}sell Gojo 50k\nQuitarlo de la venta: ${p}sell <personaje> cancel`;
+        const usage = `Uso: ${p}sell <personaje> [precio]\nEjemplo: ${p}sell Gojo 50k\nRetirarlo de la venta: ${p}unsell <personaje>`;
         if (!rest) return msg.reply(usage);
 
         const gid = gidOf(ctx);
@@ -62,7 +62,32 @@ const sell = {
         const id = market.next++;
         market.items[id] = { id, charId: c.id, seller: u.key, sellerId: ctx.sender, price, at: Date.now() };
         eco.save();
-        return msg.reply(`🏷️ *${c.name}* está en venta por *${eco.money(price, settings)}* (#${id}). Se ve con ${p}market`);
+        return msg.reply(
+            `🏷️ *${c.name}* está en venta por *${eco.money(price, settings)}* (#${id}). Se ve con ${p}market\n` +
+                `Para retirarlo de la venta: ${p}unsell ${c.name}`
+        );
+    })
+};
+
+// ---------- unsell: retirar un personaje de la venta ----------
+const unsell = {
+    ...base,
+    name: 'unsell',
+    aliases: ['cancelsell'],
+    economy: true,
+    run: needsData(async (ctx) => {
+        const { msg, rest } = ctx;
+        if (!rest) return msg.reply(`Uso: ${p}unsell <personaje>\nEjemplo: ${p}unsell Gojo`);
+
+        const gid = gidOf(ctx);
+        const u = await me(ctx);
+        const c = await G.resolve(ctx, rest, G.ownedBy(gid, u.key), 'No tienes un personaje con ese nombre.');
+        if (!c) return;
+
+        if (!G.listingOf(gid, c.id)) return msg.reply(`*${c.name}* no está en venta.`);
+        G.unlist(gid, c.id);
+        eco.save();
+        return msg.reply(`✅ *${c.name}* ya no está en venta. Vuelve a tu colección.`);
     })
 };
 
@@ -246,4 +271,4 @@ proposals.register('trade', {
     }
 });
 
-module.exports = [sell, market, buycharacter, givechar, trade];
+module.exports = [sell, unsell, market, buycharacter, givechar, trade];

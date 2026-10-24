@@ -4,6 +4,9 @@ const { formatWait } = require('../lib/utils');
 
 const { cfg, p, DICE } = C;
 const pick = (arr) => arr[Math.floor(eco.rng.fn() * arr.length)];
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+// Símbolos de relleno de la animación (aleatoriedad aparte: no afecta al resultado real)
+const spin = () => cfg.raspa.symbols[Math.floor(Math.random() * cfg.raspa.symbols.length)];
 
 // ---------- dado: tú contra el bot ----------
 const dado = {
@@ -170,11 +173,40 @@ const raspa = {
         } else {
             text = `😔 *SIN SUERTE* — perdiste *${eco.money(bet, settings)}*`;
         }
-        eco.save();
+        eco.save(); // el resultado ya está decidido y guardado; lo que sigue es solo la presentación
 
-        return msg.reply(
-            `🎟️ *RASPA Y GANA*\n\n⟦${row[0]}⟧═⟦${row[1]}⟧═⟦${row[2]}⟧\n\n${text}\n🎟️ Raspas de hoy: ${u.raspa.n}/${limit}`
-        );
+        const board = (cells) => `🎟️ *RASPA Y GANA*\n\n${cells.map((c) => `⟦${c}⟧`).join('═')}`;
+        const final = `${board(row)}\n\n${text}\n🎟️ Raspas de hoy: ${u.raspa.n}/${limit}`;
+
+        // Sin animación (desactivada o la versión de whatsapp-web.js no permite editar mensajes)
+        if (!cfg.raspa.animate || typeof msg.edit !== 'function') return msg.reply(final);
+
+        // Animación: el mismo mensaje se edita para ir "raspando" casilla por casilla
+        const frames = [
+            `${board(['🪙', '🪙', '🪙'])}\n\n🪙 Raspando...`,
+            `${board([spin(), spin(), spin()])}\n\n🪙 Raspando...`,
+            `${board([row[0], spin(), spin()])}\n\n🪙 Raspando...`,
+            `${board([row[0], row[1], spin()])}\n\n🪙 Raspando...`,
+            final
+        ];
+
+        let sent;
+        try {
+            sent = await ctx.chat.sendMessage(frames[0], { quotedMessageId: msg.id._serialized });
+        } catch (err) {
+            return msg.reply(final);
+        }
+        if (!sent || typeof sent.edit !== 'function') return ctx.chat.sendMessage(final);
+
+        for (let i = 1; i < frames.length; i++) {
+            await sleep(cfg.raspa.animationMs);
+            try {
+                await sent.edit(frames[i]);
+            } catch (err) {
+                console.error('[raspa] no pude editar el mensaje:', err.message);
+                return ctx.chat.sendMessage(final); // si falla una edición, el resultado llega igual
+            }
+        }
     }
 };
 

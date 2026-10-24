@@ -23,6 +23,7 @@ module.exports = {
         lineHeight: 1.08,        // separación entre líneas
         padding: 20,             // margen en px (el sticker mide 512x512)
         maxFont: 160,            // tamaño máximo de letra en px
+        emojiMaxFont: 340,       // tamaño máximo cuando el texto son solo emojis
         minFont: 16              // tamaño mínimo de letra en px
     },
 
@@ -86,7 +87,13 @@ module.exports = {
         minBet: 100,
         maxBet: null, // tope por apuesta (null = sin tope)
         dado: { minBet: 500 },
-        raspa: { dailyLimit: 10, winChance: 0.4, symbols: ['🍋', '🍎', '🍒', '🍇', '🍉', '⭐'] },
+        raspa: {
+            dailyLimit: 10,
+            winChance: 0.4,
+            symbols: ['🍋', '🍎', '🍒', '🍇', '🍉', '⭐'],
+            animate: true,   // el mensaje se edita para simular que se raspa (si tu versión lo permite)
+            animationMs: 900 // pausa entre cada paso de la animación
+        },
         bj: { timeoutMs: 30000, naturalPayout: 1.5 }, // el blackjack natural paga 3:2
         poker: { timeoutMs: 30000 },
         ladder: {
