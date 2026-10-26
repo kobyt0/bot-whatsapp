@@ -8,6 +8,9 @@ const { checkTools } = require('./lib/media');
 const { findChrome } = require('./lib/browser');
 const { chromePath } = require('./config');
 
+// Avisa si algún comando no aparece en el !help
+require('./commands/help').checkCoverage();
+
 // Si WhatsApp cierra la sesión y Windows no puede borrar los archivos (EBUSY),
 // la librería lanza un error que tumba el proceso: aquí se explica con claridad.
 process.on('unhandledRejection', (err) => {
