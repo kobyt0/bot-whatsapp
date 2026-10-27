@@ -76,6 +76,16 @@ module.exports = {
         }
     },
 
+    // Actividad e inactividad (el bot solo cuenta mensajes, nunca guarda su contenido)
+    inactivity: {
+        defaultWindowDays: 7, // ventana por defecto de !activos y !inactivos
+        maxDays: 60,          // ventana máxima
+        topLimit: 20,         // líneas máximas en !activos
+        listLimit: 30,        // líneas máximas en !inactivos
+        sweepEveryMs: 60 * 60e3, // cada cuánto revisa la expulsión automática
+        maxPerSweep: 5        // máximo de expulsiones por revisión (para no expulsar en masa de golpe)
+    },
+
     // Warns
     warns: {
         maxReason: 100, // caracteres máximos del motivo

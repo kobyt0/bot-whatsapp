@@ -6,10 +6,8 @@ const selfguard = require('./lib/selfguard');
 const { outgoing } = require('./lib/prefix');
 const { checkTools } = require('./lib/media');
 const { findChrome } = require('./lib/browser');
-const { chromePath } = require('./config');
-
-// Avisa si algún comando no aparece en el !help
-require('./commands/help').checkCoverage();
+const { chromePath, inactivity } = require('./config');
+const { sweepAll } = require('./lib/inactivity');
 
 // Si WhatsApp cierra la sesión y Windows no puede borrar los archivos (EBUSY),
 // la librería lanza un error que tumba el proceso: aquí se explica con claridad.
@@ -66,6 +64,11 @@ client.on('ready', async () => {
     const tools = await checkTools();
     console.log(tools.ytdlp ? `yt-dlp ${tools.ytdlp}` : '⚠️ yt-dlp NO encontrado: las descargas no funcionarán.');
     console.log(tools.ffmpeg ? 'ffmpeg OK' : '⚠️ ffmpeg NO encontrado: el audio y los mixes no funcionarán.');
+
+    // Expulsión automática por inactividad (solo en los grupos donde un admin la activó)
+    const sweep = () => sweepAll(client).catch((err) => console.error('[inactividad]', err.message));
+    setTimeout(sweep, 2 * 60e3);
+    setInterval(sweep, inactivity.sweepEveryMs);
 });
 
 // message_create también se dispara con tus propios mensajes,

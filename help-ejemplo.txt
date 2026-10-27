@@ -1,0 +1,298 @@
+📖 *Menú de comandos*
+
+Cada comando funciona en *español* y en *inglés* (sin importar acentos ni mayúsculas).
+Se separan con `|`: `!saldo` | `!balance` hacen lo mismo.
+
+👑 = solo admins · 🤖 = el bot debe ser admin
+📌 `<>` obligatorio · `[]` opcional
+⚠️ Todos los comandos comienzan con `!`
+
+╔══ ⚙️ 𝔸𝕛𝕦𝕤𝕥𝕖𝕤 𝕕𝕖𝕝 𝕘𝕣𝕦𝕡𝕠 ══╗
+║ • `!bot on|off` 👑
+║→ Activa o desactiva el bot en el grupo
+║ • `!soloadmin on|off` | `!onlyadmin` 👑
+║→ Solo los admins pueden usar comandos
+║ • `!antienlace on|off` | `!antilink` 👑
+║→ Borra los mensajes con enlaces
+║ • `!economia on|off` | `!economy` 👑
+║→ Activa o desactiva la economía
+║ • `!gacha on|off` 👑
+║→ Activa o desactiva el sistema gacha
+║ • `!comando <comando> on|off` | `!command` 👑
+║→ Activa o desactiva un comando en este grupo
+║ • `!setprefijo <prefijo>` | `!setprefix` 👑
+║→ Cambia el prefijo de los comandos (ej: #)
+╚═════════════════════╝
+
+╔══ 👋 𝔹𝕚𝕖𝕟𝕧𝕖𝕟𝕚𝕕𝕒 𝕪 𝕕𝕖𝕤𝕡𝕖𝕕𝕚𝕕𝕒 ══╗
+║ • `!bienvenida on|off` | `!welcome` 👑
+║→ Activa o desactiva el mensaje de bienvenida
+║ • `!despedida on|off` | `!goodbye` 👑
+║→ Activa o desactiva el mensaje de despedida
+║ • `!setbienvenida <texto>` | `!setwelcome` 👑
+║→ Personaliza la bienvenida ({user} {group} {count})
+║ • `!setdespedida <texto>` | `!setgoodbye` 👑
+║→ Personaliza la despedida ({user} {group} {count})
+║ • `!setportada (imagen)` | `!setbanner` 👑
+║→ Imagen de bienvenida y despedida (reset la quita)
+╚═════════════════════╝
+
+╔══ 🔇 𝕊𝕚𝕝𝕖𝕟𝕔𝕚𝕠𝕤 ══╗
+║ • `!silenciar <30m|1h|1d|1w> @user` | `!mute` 👑
+║→ Silencia a un usuario (el bot borra sus mensajes)
+║ • `!desilenciar @user` | `!unmute` 👑
+║→ Quita el silencio a un usuario
+║ • `!silenciados` | `!mutes` 👑
+║→ Lista de usuarios silenciados
+╚═════════════════════╝
+
+╔══ ⚠️ 𝕊𝕚𝕤𝕥𝕖𝕞𝕒 𝕕𝕖 𝕨𝕒𝕣𝕟𝕤 ══╗
+║ • `!setlimitewarn <1-20|off>` | `!setwarnlimit` 👑
+║→ Límite de warns antes de la expulsión automática
+║ • `!advertir @user [motivo]` | `!warn` 👑
+║→ Agrega un warn (mención o respondiendo)
+║ • `!quitarwarn @user` | `!unwarn` 👑
+║→ Quita un warn
+║ • `!reiniciarwarn @user` | `!resetwarn` 👑
+║→ Reinicia todos los warns de un usuario
+║ • `!advertencias @user` | `!warns`
+║→ Ver los warns de un usuario
+║ • `!misadvertencias` | `!mywarns`
+║→ Ver tus warns
+║ • `!todasadvertencias` | `!allwarns`
+║→ Usuarios del grupo con warns
+╚═════════════════════╝
+
+╔══ 📈 𝔸𝕔𝕥𝕚𝕧𝕚𝕕𝕒𝕕 ══╗
+║ • `!activos [días]` | `!active` | `!topactivos`
+║→ Quién ha escrito y cuántos mensajes (7 días, máx. 60)
+║ • `!inactivos [días]` | `!inactive` | `!topinactive`
+║→ Quién lleva más tiempo sin escribir
+║ • `!setinactividad <días|off>` | `!setinactivity` 👑
+║→ Expulsa solo a quien pase ese tiempo sin escribir
+╚═════════════════════╝
+
+╔══ 👮 𝔸𝕕𝕞𝕚𝕟𝕚𝕤𝕥𝕣𝕒𝕔𝕚ó𝕟 𝕕𝕖𝕝 𝕘𝕣𝕦𝕡𝕠 ══╗
+║ • `!todos [texto]` | `!all` | `!tagall` | `!tag` 👑
+║→ Menciona a todos sin mostrar los @
+║ • `!promover @user` | `!promote` 👑🤖
+║→ Hace admin a un miembro
+║ • `!degradar @user` | `!demote` 👑🤖
+║→ Quita el admin a un miembro
+║ • `!expulsar @user` | `!kick` 👑🤖
+║→ Expulsa a un miembro
+║ • `!cerrar` | `!close` 👑🤖
+║→ Solo los admins pueden escribir
+║ • `!abrir` | `!open` 👑🤖
+║→ Todos pueden escribir
+║ • `!setnombregrupo <nombre>` | `!setgroupname` | `!setnamegroup` 👑
+║→ Cambia el nombre del grupo
+║ • `!setfotogrupo (imagen)` | `!setgrouppic` | `!setpfp` 👑
+║→ Cambia la foto del grupo
+║ • `!borrar (responde a un mensaje)` | `!delete` | `!del` 👑
+║→ Borra el mensaje citado
+╚═════════════════════╝
+
+╔══ 🛠️ 𝔾𝕖𝕟𝕖𝕣𝕒𝕝𝕖𝕤 ══╗
+║ • `!ayuda` | `!help` | `!menu`
+║→ Muestra este menú
+║ • `!estado` | `!status`
+║→ Estado del bot y tiempo activo
+║ • `!ping`
+║→ Velocidad de respuesta del bot
+║ • `!infobot` | `!botinfo` | `!infobots`
+║→ Información del bot y de este grupo
+║ • `!quiensoy` | `!whoami`
+║→ Tu ID (sirve para configurar owners)
+║ • `!sticker (imagen o video)` | `!s`
+║→ Crea un sticker
+║ • `!decir <mensaje>` | `!say`
+║→ El bot repite tu mensaje
+║ • `!hablar <texto>` | `!playaudio` | `!tts`
+║→ Convierte texto en nota de voz
+╚═════════════════════╝
+
+╔══ 📥 𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕤 ══╗
+║ • `!video <enlace> [360|720]` | `!youtube` | `!yt`
+║→ Descarga un video de YouTube
+║ • `!musica <canción o enlace>` | `!ytmusic` | `!ytmp3` | `!music`
+║→ Descarga el audio de una canción
+║ • `!tiktok <enlace> [audio]` | `!tk`
+║→ Descarga un TikTok
+║ • `!audiotiktok <enlace>` | `!tkaudio` | `!tiktokaudio` | `!tkmp3` | `!tiktokmp3`
+║→ Solo el audio de un TikTok
+╚═════════════════════╝
+
+╔══ 🎵 ℙ𝕝𝕒𝕪𝕝𝕚𝕤𝕥𝕤 ══╗
+║ • `!playlist <nombre>`
+║→ Crea una playlist o muestra las tuyas
+║ • `!agregarlista <playlist> | <canción>` | `!addlist`
+║→ Agrega una canción a la playlist
+║ • `!quitarlista <playlist> | <texto|n>` | `!dellist`
+║→ Quita una canción de la playlist
+║ • `!verlista <playlist>` | `!viewlist`
+║→ Muestra las canciones de la playlist
+║ • `!escuchar <playlist>` | `!listen`
+║→ Envía el mix de la playlist en un solo audio
+║ • `!borrarplaylist <playlist>` | `!delplaylist`
+║→ Elimina la playlist completa
+╚═════════════════════╝
+
+╔══ 💰 𝔼𝕔𝕠𝕟𝕠𝕞í𝕒 ══╗
+║ • `!saldo [@user]` | `!balance` | `!bal`
+║→ Tu dinero (efectivo y banco) o el de otro
+║ • `!depositar <monto|all|half>` | `!deposit` | `!dep`
+║→ Guarda efectivo en el banco
+║ • `!retirar <monto|all|half>` | `!withdraw`
+║→ Saca dinero del banco
+║ • `!pagar <monto> @user` | `!pay`
+║→ Envía coins a otro usuario
+║ • `!topsaldo` | `!baltop`
+║→ Ranking de los más ricos del grupo
+║ • `!setmoneda <nombre|reset>` | `!setcoins` 👑
+║→ Renombra la moneda del grupo
+║ • `!reiniciareconomia` | `!reseteconomy` 👑
+║→ Deja a todos con 0 coins
+╚═════════════════════╝
+
+╔══ 💼 ℂ𝕣𝕚𝕞𝕖𝕟 𝕪 𝕥𝕣𝕒𝕓𝕒𝕛𝕠 ══╗
+║ • `!diario` | `!daily`
+║→ Recompensa diaria con racha
+║ • `!trabajar` | `!work` | `!w`
+║→ Trabaja y gana coins
+║ • `!encanto` | `!slut`
+║→ Apuesta tu encanto (puede salir mal)
+║ • `!crimen` | `!crime`
+║→ Comete un crimen (puede salir mal)
+║ • `!robar @user` | `!rob`
+║→ Roba efectivo a alguien inactivo (más de 2 h)
+╚═════════════════════╝
+
+╔══ 🎰 𝔸𝕡𝕦𝕖𝕤𝕥𝕒𝕤 𝕔𝕝á𝕤𝕚𝕔𝕒𝕤 ══╗
+║ • `!dado <monto>` | `!dice`
+║→ Duelo 1 vs bot (mínimo 500)
+║ • `!moneda <monto> [cara|cruz]` | `!coinflip` | `!cf`
+║→ Cara o cruz al instante
+║ • `!ruleta <monto> [red|black]` | `!roulette`
+║→ Apuesta al rojo o negro
+║ • `!raspa <monto|all|half>` | `!scratch`
+║→ Raspa y gana (10 intentos diarios)
+╚═════════════════════╝
+
+╔══ 🃏 𝔹𝕝𝕒𝕔𝕜𝕛𝕒𝕔𝕜 𝕪 𝕡ó𝕜𝕖𝕣 ══╗
+║ • `!blackjack <monto|all|half>` | `!bj`
+║→ Juega blackjack contra el bot
+║ • `!pedir` | `!hit`
+║→ Blackjack: pedir carta
+║ • `!plantarse` | `!stand`
+║→ Blackjack: plantarse
+║ • `!reglasbj` | `!infobj`
+║→ Reglas del blackjack
+║ • `!poker <monto|all|half>`
+║→ Juega póker de 3 cartas contra el bot
+║ • `!jugar` | `!play`
+║→ Póker: igualar la apuesta
+║ • `!retirarse` | `!fold`
+║→ Póker: retirarse
+║ • `!reglaspoker` | `!infopoker`
+║→ Reglas del póker
+╚═════════════════════╝
+
+╔══ 🪜 𝔼𝕤𝕔𝕒𝕝𝕖𝕣𝕒 𝕪 𝕞𝕖𝕤𝕒 𝕘𝕣𝕦𝕡𝕒𝕝 ══╗
+║ • `!escalera <monto|all|half>` | `!ladder`
+║→ Sube la escalera del riesgo
+║ • `!subir` | `!climb`
+║→ Escalera: subir un escalón
+║ • `!cobrar` | `!cashout`
+║→ Escalera: cobrar lo acumulado
+║ • `!apostar <monto|all|half>` | `!bet`
+║→ Crea una mesa grupal de apuestas
+║ • `!unirse` | `!join`
+║→ Únete a la mesa activa
+║ • `!tirar` | `!throw`
+║→ Lanza tu dado en la mesa
+╚═════════════════════╝
+
+╔══ 👤 ℙ𝕖𝕣𝕗𝕚𝕝 ══╗
+║ • `!perfil [@user]` | `!profile`
+║→ Ver tu perfil o el de otro
+║ • `!foto [@user]` | `!getpic` | `!pfp`
+║→ Foto de perfil de un usuario
+║ • `!setfoto (imagen)` | `!setpic` | `!setphoto` | `!setavatar`
+║→ Foto de tu perfil del bot
+║ • `!borrarfoto` | `!delpic` | `!delphoto` | `!delavatar`
+║→ Quita tu foto del perfil
+║ • `!setfavorito <texto>` | `!setfav` | `!setfavourite`
+║→ Tu personaje favorito
+║ • `!borrarfavorito` | `!delfavourite` | `!delfav`
+║→ Borra tu favorito
+║ • `!setdescripcion <texto>` | `!setdesc` | `!setdescription`
+║→ Tu descripción
+║ • `!borrardescripcion` | `!deldescription` | `!deldesc`
+║→ Borra tu descripción
+║ • `!setgenero <hombre|mujer|otro>` | `!setgenre`
+║→ Tu género
+║ • `!borrargenero` | `!delgenre`
+║→ Borra tu género
+║ • `!setcumple AAAA-MM-DD` | `!setbirth`
+║→ Registra tu cumpleaños
+║ • `!borrarcumple` | `!delbirth`
+║→ Borra tu cumpleaños
+║ • `!setautor <autor> | <pack>` | `!setmeta` | `!setstickermeta`
+║→ Autor y pack de tus stickers
+║ • `!borrarmeta` | `!delstickermeta` | `!delmeta`
+║→ Restablece autor y pack
+║ • `!cumpleaños` | `!birthdays`
+║→ Próximos cumpleaños del grupo
+║ • `!todoscumpleaños` | `!allbirthdays`
+║→ Todos los cumpleaños registrados
+╚═════════════════════╝
+
+╔══ 💍 ℙ𝕒𝕣𝕖𝕛𝕒𝕤 ══╗
+║ • `!casarse @user` | `!marry`
+║→ Propón matrimonio
+║ • `!acepto` | `!accept`
+║→ Acepta una propuesta
+║ • `!rechazo` | `!reject`
+║→ Rechaza una propuesta
+║ • `!divorcio` | `!divorce`
+║→ Divorciarte de tu pareja
+╚═════════════════════╝
+
+╔══ 🎴 𝔾𝕒𝕔𝕙𝕒 ══╗
+║ • `!girar` | `!roll` | `!rw`
+║→ Revela un personaje aleatorio
+║ • `!reclamar` | `!claim` | `!c`
+║→ Reclama el personaje que salió
+║ • `!infogacha` | `!ginfo`
+║→ Tus tiradas y tiempos de espera
+║ • `!libro [@user]` | `!harem`
+║→ Tu colección de personajes
+║ • `!borrarpersonaje <nombre>` | `!delchar`
+║→ Elimina un personaje de tu colección
+║ • `!borrarharem` | `!delallharem`
+║→ Elimina todo tu harem (irreversible)
+║ • `!infoanime <anime>` | `!ainfo`
+║→ Personajes de un anime
+║ • `!listaanimes` | `!slist`
+║→ Animes disponibles
+║ • `!imagenpersonaje <nombre>` | `!wimage`
+║→ Imagen de un personaje
+╚═════════════════════╝
+
+╔══ 🛒 𝕄𝕖𝕣𝕔𝕒𝕕𝕠 ══╗
+║ • `!vender <personaje> [precio]` | `!sell`
+║→ Pone un personaje en venta
+║ • `!retirarventa <personaje>` | `!unsell` | `!cancelsell`
+║→ Retira un personaje de la venta
+║ • `!mercado` | `!market`
+║→ Personajes en venta
+║ • `!comprarpersonaje <#número|nombre>` | `!buycharacter` | `!buychar`
+║→ Compra un personaje del mercado
+║ • `!regalarpersonaje <personaje> @user` | `!givechar`
+║→ Regala un personaje
+║ • `!intercambiar @user <mío> | <suyo>` | `!trade`
+║→ Intercambia personajes
+╚═════════════════════╝
+
+Si necesitas ayuda, contacta a los administradores del grupo.

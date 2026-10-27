@@ -76,7 +76,20 @@ module.exports = (client) => async (msg) => {
             } catch (_) {}
 
             // Actividad del grupo (la usa la regla de inactividad de !robar)
-            if (!msg.fromMe) eco.touch(chat.id._serialized, [ctx.sender, ...ctx.senderExtra]);
+            if (!msg.fromMe) {
+                eco.touch(chat.id._serialized, [ctx.sender, ...ctx.senderExtra]);
+
+                // Solo se anota UN NÚMERO por mensaje (texto, sticker, foto...): nunca su contenido
+                try {
+                    if (!ctx.settings.trackedSince) {
+                        ctx.settings.trackedSince = Date.now();
+                        db.save();
+                    }
+                    await eco.countMessage(client, chat.id._serialized, ctx.sender, ctx.senderExtra);
+                } catch (err) {
+                    console.error('[actividad]', err.message);
+                }
+            }
 
             ctx.isAdmin = msg.fromMe || (await isAdmin(client, chat, ctx.sender, ctx.senderExtra));
             ctx.isBotAdmin = await isBotAdmin(client, chat);

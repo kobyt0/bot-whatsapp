@@ -1,5 +1,5 @@
 const db = require('../lib/db');
-const { parseOnOff } = require('../lib/utils');
+const { parseOnOff, normalizeName } = require('../lib/utils');
 const { prefixes } = require('../config');
 const p = prefixes[0];
 
@@ -21,7 +21,7 @@ module.exports = {
             );
         }
 
-        const rawName = args[0].toLowerCase().replace(new RegExp('^[' + prefixes.map((x) => '\\' + x).join('') + ']'), '');
+        const rawName = normalizeName(args[0]).replace(new RegExp('^[' + prefixes.map((x) => '\\' + x).join('') + ']'), '');
         const target = commands.get(rawName);
         if (!target) return msg.reply(`No existe el comando *${rawName}*.`);
 

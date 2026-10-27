@@ -1,5 +1,6 @@
 const { MessageMedia } = require('whatsapp-web.js');
 const db = require('../lib/db');
+const eco = require('../lib/economy');
 const banner = require('../lib/banner');
 const cooldown = require('../lib/cooldown');
 const { render, DEFAULT_WELCOME, DEFAULT_GOODBYE } = require('../lib/welcome');
@@ -69,7 +70,27 @@ async function handle(client, notification, kind) {
     await chat.sendMessage(text, { mentions });
 }
 
+// Anota cuándo entra cada persona (sirve para no expulsar por inactividad a quien acaba de llegar)
+async function recordJoins(client, notification) {
+    const chatId = notification.chatId || (notification.id && notification.id.remote);
+    if (!chatId) return;
+    const botId = client.info.wid._serialized;
+    for (const id of notification.recipientIds || []) {
+        if (await sameUser(client, id, [], botId, botExtra(client))) continue;
+        const u = await eco.getUser(client, chatId, id);
+        u.joinedAt = Date.now();
+        eco.markDirty();
+    }
+}
+
 module.exports = (client) => ({
-    onJoin: (n) => handle(client, n, 'welcome').catch((e) => console.error('[bienvenida]', e.message)),
+    onJoin: async (n) => {
+        try {
+            await recordJoins(client, n);
+        } catch (e) {
+            console.error('[entrada]', e.message);
+        }
+        return handle(client, n, 'welcome').catch((e) => console.error('[bienvenida]', e.message));
+    },
     onLeave: (n) => handle(client, n, 'goodbye').catch((e) => console.error('[despedida]', e.message))
 });

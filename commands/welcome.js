@@ -23,7 +23,7 @@ function makeSetter({ name, key, toggle, def, label }) {
                 return msg.reply(`✅ ${label} restablecido al texto por defecto.`);
             }
 
-            if (rest.length > 3000) return msg.reply('El texto es demasiado largo (máximo 1000 caracteres).');
+            if (rest.length > 1000) return msg.reply('El texto es demasiado largo (máximo 1000 caracteres).');
 
             settings[key] = rest;
             db.save();
