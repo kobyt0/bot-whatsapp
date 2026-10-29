@@ -43,7 +43,17 @@ const client = new Client({
             '--disable-accelerated-2d-canvas',
             '--no-first-run',
             '--no-zygote',
-            '--disable-gpu'
+            '--disable-gpu',
+            '--disable-software-rasterizer',
+            '--mute-audio',
+            '--disable-background-networking',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-component-extensions-with-background-pages',
+            '--disable-default-apps',
+            '--disable-extensions',
+            '--disable-ipc-flooding-protection',
+            '--disable-renderer-backgrounding',
+            '--js-flags=--max-old-space-size=512'
         ]
     }
 });
