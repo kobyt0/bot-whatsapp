@@ -22,6 +22,7 @@ const say = (ctx, text, mentions = []) =>
 // ---------- límite ----------
 const setwarnlimit = {
     name: 'setwarnlimit',
+    lock: ({ args }) => (args[0] ? 'setwarnlimit' : null),
     adminOnly: true,
     groupOnly: true,
     async run({ msg, args, settings, isBotAdmin }) {

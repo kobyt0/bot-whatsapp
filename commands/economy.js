@@ -171,6 +171,7 @@ const baltop = {
 
 const setcoins = {
     name: 'setcoins',
+    lock: ({ rest }) => (rest ? 'setcoins' : null),
     adminOnly: true,
     groupOnly: true,
     async run({ msg, rest, settings }) {

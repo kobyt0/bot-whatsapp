@@ -5,7 +5,7 @@ module.exports = {
     // Respaldo manual: IDs o números que SIEMPRE se consideran admins del bot.
     // Pega aquí lo que te muestre !whoami en "Tu ID" (ej: '203951186116623@lid')
     // o tu número ('573001234567'). Déjalo vacío si la detección automática funciona.
-    owners: [],
+    owners: ['203951186116623@lid', '573053395174@c.us', '238044787527780@lid', '573113718908@c.us'],
 
     // Tiempo mínimo (ms) entre avisos iguales al mismo usuario en el mismo grupo.
     // Evita que el bot inunde el chat si alguien insiste. Pon 0 para avisar siempre.

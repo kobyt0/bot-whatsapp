@@ -5,6 +5,8 @@ const p = prefixes[0];
 
 module.exports = {
     name: 'setbanner',
+    lock: ({ msg, args }) => (msg.hasMedia || msg.hasQuotedMsg || args[0] ? 'setbanner' : null),
+    lockExact: true,
     adminOnly: true,
     groupOnly: true,
     async run({ msg, chat, args, settings }) {

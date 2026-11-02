@@ -15,6 +15,7 @@ function failed(ctx, what, err) {
 
 const promote = {
     name: 'promote',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     botAdmin: true,
@@ -45,6 +46,7 @@ const promote = {
 
 const demote = {
     name: 'demote',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     botAdmin: true,
@@ -81,6 +83,7 @@ const demote = {
 
 const kick = {
     name: 'kick',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     botAdmin: true,
@@ -117,6 +120,7 @@ const kick = {
 
 const close = {
     name: 'close',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     botAdmin: true,
@@ -132,6 +136,7 @@ const close = {
 
 const open = {
     name: 'open',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     botAdmin: true,

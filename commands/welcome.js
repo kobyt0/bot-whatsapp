@@ -6,6 +6,7 @@ const p = prefixes[0];
 function makeSetter({ name, key, toggle, def, label }) {
     return {
         name,
+        lock: ({ rest }) => (rest ? name : null),
         adminOnly: true,
         groupOnly: true,
         async run({ msg, rest, settings }) {

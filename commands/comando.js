@@ -8,6 +8,15 @@ const PROTECTED = ['comando', 'bot'];
 
 module.exports = {
     name: 'comando',
+    // clave de bloqueo: "cmd:<comando>" cuando se está activando o desactivando uno
+    lock: ({ args }) => {
+        if (parseOnOff(args[1]) === null || !args[0]) return null;
+        const raw = args[0].toLowerCase().replace(new RegExp('^[' + prefixes.map((x) => '\\' + x).join('') + ']'), '');
+        const target = require('./index').get(raw);
+        return target ? `cmd:${target.name}` : null;
+    },
+    lockExact: true,
+    release: ({ args }) => parseOnOff(args[1]) === true, // volver a activar un comando devuelve el control a los admins
     adminOnly: true,
     groupOnly: true,
     async run({ msg, args, settings }) {

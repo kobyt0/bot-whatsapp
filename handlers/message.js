@@ -8,7 +8,9 @@ const moderate = require('./moderation');
 const config = require('../config');
 const { prefixesFor } = require('../lib/prefix');
 const { parseCommand, getSenderId } = require('../lib/utils');
-const { isAdmin, isBotAdmin } = require('../lib/identity');
+const banned = require('../lib/banned');
+const L = require('../lib/locks');
+const { isAdmin, isGroupAdmin, isBotAdmin, isOwner } = require('../lib/identity');
 
 module.exports = (client) => async (msg) => {
     try {
@@ -40,6 +42,7 @@ module.exports = (client) => async (msg) => {
             senderExtra: [],
             isCommand: !!command,
             isAdmin: true, // en privado no hay roles
+            isOwner: !!msg.fromMe, // dueño del bot (config.owners o la propia cuenta del bot)
             isBotAdmin: false
         };
 
@@ -64,6 +67,14 @@ module.exports = (client) => async (msg) => {
             } catch (err) {
                 console.error('No pude enviar el aviso:', err.message);
             }
+        };
+
+        // Personas vetadas: no pueden usar ninguna función del bot (la propia cuenta del bot nunca se veta)
+        const denyBanned = async () => {
+            if (!command || msg.fromMe) return false;
+            if (!(await banned.find(client, ctx.sender, ctx.senderExtra))) return false;
+            await ctx.notify('banned', M.banned);
+            return true;
         };
 
         if (chat.isGroup) {
@@ -91,12 +102,16 @@ module.exports = (client) => async (msg) => {
                 }
             }
 
+            ctx.isOwner = await isOwner(client, ctx.sender, ctx.senderExtra, msg.fromMe);
+            // El dueño es "admin supremo": cuenta como admin en todos los grupos (config.owners)
             ctx.isAdmin = msg.fromMe || (await isAdmin(client, chat, ctx.sender, ctx.senderExtra));
             ctx.isBotAdmin = await isBotAdmin(client, chat);
 
+            if (await denyBanned()) return;
+
             // Bot apagado: solo responde a "!bot" (para poder volver a encenderlo)
             if (!ctx.settings.botEnabled && !(command && command.name === 'bot')) {
-                if (command) await ctx.notify('botoff', M.botOff);
+                if (command) await ctx.notify('botoff', L.isLocked(ctx.settings, 'bot') ? M.botOffLocked : M.botOff);
                 return;
             }
 
@@ -105,33 +120,41 @@ module.exports = (client) => async (msg) => {
 
             // Modo solo-admins
             if (ctx.settings.onlyAdmin && !ctx.isAdmin) {
-                if (command) await ctx.notify('onlyadmin', M.onlyAdminMode);
+                if (command) await ctx.notify('onlyadmin', L.isLocked(ctx.settings, 'onlyadmin') ? M.onlyAdminModeLocked : M.onlyAdminMode);
                 return;
             }
 
             // Comandos desactivados con !comando
             if (command && ctx.settings.disabledCommands.includes(command.name)) {
-                await ctx.notify('cmdoff', M.commandDisabled(command.name));
+                await ctx.notify('cmdoff', L.isLocked(ctx.settings, `cmd:${command.name}`) ? M.commandDisabledLocked(command.name) : M.commandDisabled(command.name));
                 return;
             }
 
             // Gacha apagado con !gacha off
             if (command && command.gacha && !ctx.settings.gacha) {
-                await ctx.notify('gachaoff', M.gachaOff);
+                await ctx.notify('gachaoff', L.isLocked(ctx.settings, 'gacha') ? M.featureOffLocked('El sistema gacha') : M.gachaOff);
                 return;
             }
 
             // Economía apagada con !economy off
             if (command && command.economy && !ctx.settings.economy) {
-                await ctx.notify('economyoff', M.economyOff);
+                await ctx.notify('economyoff', L.isLocked(ctx.settings, 'economy') ? M.featureOffLocked('La economía') : M.economyOff);
                 return;
             }
         }
 
         if (!command) return;
 
+        if (!chat.isGroup) {
+            ctx.isOwner = await isOwner(client, ctx.sender, [], msg.fromMe);
+            if (await denyBanned()) return;
+        }
+
         if (command.groupOnly && !chat.isGroup) {
             return ctx.notify('grouponly', M.groupOnly);
+        }
+        if (command.ownerOnly && !ctx.isOwner) {
+            return ctx.notify('owneronly', M.ownerOnlyCommand);
         }
         if (command.adminOnly && !ctx.isAdmin) {
             return ctx.notify('adminonly', M.adminOnlyCommand);
@@ -140,7 +163,37 @@ module.exports = (client) => async (msg) => {
             return ctx.notify('botneedsadmin', M.botNeedsAdmin);
         }
 
+        // Acciones sobre el grupo en WhatsApp (expulsar, promover, cerrar, nombre, foto...):
+        // el dueño debe ser admin real de ese grupo; si no, el bot lo avisa.
+        if (command.groupAction && ctx.isOwner && !msg.fromMe && !(await isGroupAdmin(client, chat, ctx.sender, ctx.senderExtra))) {
+            return ctx.notify('ownernotadmin', M.ownerNotGroupAdmin);
+        }
+
+        // Ajustes bloqueados por el dueño: los demás admins no los pueden cambiar
+        const lockKey = ctx.settings && command.lock ? command.lock(ctx) : null;
+        if (lockKey && !ctx.isOwner && L.isLocked(ctx.settings, lockKey)) {
+            return ctx.notify('locked', M.locked(L.label(lockKey, ctx.settings)));
+        }
+        const before = lockKey && ctx.isOwner && !command.lockExact ? L.snapshot(ctx.settings) : null;
+
         await command.run(ctx);
+
+        // Lo que configura el dueño queda bloqueado para los demás admins (se libera con !liberar)
+        // (si el dueño lo deja en su valor normal, vuelve a ser de todos y se libera)
+        if (lockKey && ctx.isOwner && (command.lockExact || L.snapshot(ctx.settings) !== before)) {
+            const locked = L.isLocked(ctx.settings, lockKey);
+            if (command.release && command.release(ctx)) {
+                if (locked) {
+                    delete ctx.settings.locks[lockKey];
+                    db.save();
+                    await msg.reply(`🔓 Liberado: los admins vuelven a poder cambiar *${L.label(lockKey, ctx.settings)}*.`);
+                }
+            } else if (!locked) {
+                ctx.settings.locks[lockKey] = true;
+                db.save();
+                await msg.reply(`🔒 Bloqueado: los admins ya no pueden cambiar *${L.label(lockKey, ctx.settings)}*. Para liberarlo: !liberar ${lockKey}`);
+            }
+        }
     } catch (err) {
         console.error('Error procesando mensaje:', err);
     }

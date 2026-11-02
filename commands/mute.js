@@ -22,7 +22,7 @@ const mute = {
     name: 'mute',
     adminOnly: true,
     groupOnly: true,
-    async run({ client, msg, chat, args, settings, isBotAdmin }) {
+    async run({ client, msg, chat, args, settings, isBotAdmin, isOwner }) {
         const ms = args.map(parseDuration).find(Boolean);
         const target = await resolveTarget(msg);
 
@@ -40,7 +40,16 @@ const mute = {
             return msg.reply('⛔ No se puede silenciar a un admin.');
         }
 
-        settings.mutes[target] = Date.now() + ms;
+        // Si el dueño ya silenció a esta persona, otro admin no puede cambiarlo
+        const prevKey = await findMuteKey(client, settings, target);
+        if (prevKey && settings.ownerMutes[prevKey] && !isOwner) {
+            return msg.reply('🔒 Este silencio lo puso el dueño del bot: solo él puede cambiarlo.');
+        }
+
+        const key = prevKey || target;
+        settings.mutes[key] = Date.now() + ms;
+        if (isOwner) settings.ownerMutes[key] = true;
+        else delete settings.ownerMutes[key];
         db.save();
 
         let text = `🔇 ${mention(target)} silenciado por ${formatDuration(ms)}.`;
@@ -55,7 +64,7 @@ const unmute = {
     name: 'unmute',
     adminOnly: true,
     groupOnly: true,
-    async run({ client, msg, chat, settings }) {
+    async run({ client, msg, chat, settings, isOwner }) {
         const target = await resolveTarget(msg);
         if (!target) {
             return msg.reply(`Uso: ${prefixes[0]}unmute @usuario (o responde a un mensaje suyo)`);
@@ -66,7 +75,12 @@ const unmute = {
             return msg.reply('Ese usuario no está silenciado.');
         }
 
+        if (settings.ownerMutes[key] && !isOwner) {
+            return msg.reply('🔒 Este silencio lo puso el dueño del bot: solo él puede quitarlo.');
+        }
+
         delete settings.mutes[key];
+        delete settings.ownerMutes[key];
         db.save();
         return chat.sendMessage(`🔊 ${mention(target)} ya puede escribir de nuevo.`, {
             mentions: [target]

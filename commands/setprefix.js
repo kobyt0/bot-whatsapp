@@ -4,6 +4,7 @@ const { prefixes } = require('../config');
 
 module.exports = {
     name: 'setprefix',
+    lock: ({ args }) => (args[0] ? 'setprefix' : null),
     adminOnly: true,
     groupOnly: true,
     async run({ msg, args, settings }) {

@@ -3,7 +3,7 @@
 Cada comando funciona en *español* y en *inglés* (sin importar acentos ni mayúsculas).
 Se separan con `|`: `!saldo` | `!balance` hacen lo mismo.
 
-👑 = solo admins · 🤖 = el bot debe ser admin
+👑 = solo admins · 🤖 = el bot debe ser admin · 🔒 = solo dueños del bot
 📌 `<>` obligatorio · `[]` opcional
 ⚠️ Todos los comandos comienzan con `!`
 
@@ -44,6 +44,19 @@ Se separan con `|`: `!saldo` | `!balance` hacen lo mismo.
 ║→ Quita el silencio a un usuario
 ║ • `!silenciados` | `!mutes` 👑
 ║→ Lista de usuarios silenciados
+╚═════════════════════╝
+
+╔══ 🚫 𝕍𝕖𝕥𝕠𝕤 𝕪 𝕓𝕝𝕠𝕢𝕦𝕖𝕠𝕤 ══╗
+║ • `!vetar @user [motivo]` | `!banuser` | `!ban` 🔒
+║→ Esa persona no podrá usar ningún comando del bot (también por número o respondiendo)
+║ • `!desvetar @user` | `!unbanuser` | `!unban` 🔒
+║→ Quita el veto a una persona
+║ • `!vetados` | `!banlist` 🔒
+║→ Lista de personas vetadas
+║ • `!bloqueos` | `!locks` 🔒
+║→ Ajustes que el dueño bloqueó en este grupo (los admins no pueden cambiarlos)
+║ • `!liberar <ajuste|all>` | `!unlock` 🔒
+║→ Devuelve el control de un ajuste a los admins
 ╚═════════════════════╝
 
 ╔══ ⚠️ 𝕊𝕚𝕤𝕥𝕖𝕞𝕒 𝕕𝕖 𝕨𝕒𝕣𝕟𝕤 ══╗

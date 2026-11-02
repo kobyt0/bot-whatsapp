@@ -88,6 +88,7 @@ const inactivos = {
 // ---------- !setinactividad ----------
 const setinactividad = {
     name: 'setinactividad',
+    lock: ({ args }) => (args[0] ? 'setinactividad' : null),
     adminOnly: true,
     groupOnly: true,
     async run(ctx) {

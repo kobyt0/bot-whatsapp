@@ -11,6 +11,7 @@ function failed(ctx, what, err) {
 
 const setnamegroup = {
     name: 'setnamegroup',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     async run(ctx) {
@@ -29,6 +30,7 @@ const setnamegroup = {
 
 const setpfp = {
     name: 'setpfp',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     async run(ctx) {
@@ -65,6 +67,7 @@ const setpfp = {
 
 const del = {
     name: 'delete',
+    groupAction: true, // requiere ser admin real del grupo (también para el dueño)
     adminOnly: true,
     groupOnly: true,
     async run(ctx) {
