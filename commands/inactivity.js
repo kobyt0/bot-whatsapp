@@ -131,4 +131,53 @@ const setinactividad = {
     }
 };
 
-module.exports = [activos, inactivos, setinactividad];
+// ---------- !listaactivos (lista completa) ----------
+const CHUNK = 3000; // caracteres por mensaje: si la lista es larga se envía en varios mensajes seguidos
+const BATCH = 15;   // nombres que se consultan a la vez (para no saturar el navegador en grupos grandes)
+
+const listaactivos = {
+    name: 'listaactivos',
+    groupOnly: true,
+    async run(ctx) {
+        const { client, msg, chat, args, settings } = ctx;
+        const days = windowFor(args, settings);
+        const members = await I.classify(client, chat, settings, days);
+
+        const active = members.filter((m) => m.status === 'active').sort((a, b) => b.count - a.count || b.last - a.last);
+        if (!active.length) {
+            return msg.reply(`😴 Nadie ha escrito en los últimos ${days} día(s).\n${trackingNote(settings, days)}`.trim());
+        }
+
+        const names = [];
+        for (let i = 0; i < active.length; i += BATCH) {
+            names.push(...(await Promise.all(active.slice(i, i + BATCH).map((m) => eco.nameOf(client, m.id)))));
+        }
+        const lines = active.map((m, i) => `${i + 1}. ${m.isAdmin ? '👑 ' : ''}${names[i]} — ${m.count} mensaje${m.count === 1 ? '' : 's'}`);
+
+        // Se parte en mensajes de ~3000 caracteres sin cortar ninguna línea
+        const parts = [];
+        let cur = '';
+        for (const line of lines) {
+            if (cur && cur.length + line.length + 1 > CHUNK) {
+                parts.push(cur);
+                cur = '';
+            }
+            cur += (cur ? '\n' : '') + line;
+        }
+        if (cur) parts.push(cur);
+
+        const title = `📈 *Lista completa de activos* (últimos ${days} día${days === 1 ? '' : 's'})`;
+        const count = `${active.length} de ${members.length} miembros han escrito`;
+        const foot = trackingNote(settings, days);
+
+        for (let i = 0; i < parts.length; i++) {
+            const label = parts.length > 1 ? ` (${i + 1}/${parts.length})` : '';
+            const top = i === 0 ? `${title}${label}\n${count}` : `📈 *Lista de activos*${label}`;
+            const text = `${top}\n\n${parts[i]}${i === parts.length - 1 && foot ? `\n\n${foot}` : ''}`;
+            if (i === 0) await msg.reply(text);
+            else await chat.sendMessage(text);
+        }
+    }
+};
+
+module.exports = [activos, inactivos, setinactividad, listaactivos];

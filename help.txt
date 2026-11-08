@@ -79,6 +79,8 @@ Se separan con `|`: `!saldo` | `!balance` hacen lo mismo.
 ╔══ 📈 𝔸𝕔𝕥𝕚𝕧𝕚𝕕𝕒𝕕 ══╗
 ║ • `!activos [días]` | `!active` | `!topactivos`
 ║→ Quién ha escrito y cuántos mensajes (7 días, máx. 60)
+║ • `!listaactivos [días]` | `!activelist` | `!fullactive`
+║→ Lista completa de activos con sus mensajes (en varios mensajes si es larga)
 ║ • `!inactivos [días]` | `!inactive` | `!topinactive`
 ║→ Quién lleva más tiempo sin escribir
 ║ • `!setinactividad <días|off>` | `!setinactivity` 👑
