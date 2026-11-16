@@ -86,6 +86,13 @@ module.exports = {
         maxPerSweep: 5        // máximo de expulsiones por revisión (para no expulsar en masa de golpe)
     },
 
+    // Justificaciones de inactividad
+    justifications: {
+        maxText: 2000,     // caracteres máximos de cada justificación
+        maxPerGroup: 200,  // justificaciones máximas por grupo
+        chunk: 3000        // caracteres por mensaje al listarlas (si es más largo, se envía en varios)
+    },
+
     // Warns
     warns: {
         maxReason: 100, // caracteres máximos del motivo

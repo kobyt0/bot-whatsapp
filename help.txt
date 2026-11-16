@@ -81,6 +81,12 @@ Se separan con `|`: `!saldo` | `!balance` hacen lo mismo.
 ║→ Quién ha escrito y cuántos mensajes (7 días, máx. 60)
 ║ • `!listaactivos [días]` | `!activelist` | `!fullactive`
 ║→ Lista completa de activos con sus mensajes (en varios mensajes si es larga)
+║ • `!justificar @user <texto>` | `!justify` 👑
+║→ Guarda la justificación de inactividad de alguien (o responde a un mensaje suyo)
+║ • `!justificaciones [@user]` | `!justifications`
+║→ Lista de justificaciones del grupo (en varios mensajes si es larga)
+║ • `!quitarjustificacion <n|@user>` | `!deljustification` | `!unjustify` 👑
+║→ Borra una justificación por número, o todas las de una persona
 ║ • `!inactivos [días]` | `!inactive` | `!topinactive`
 ║→ Quién lleva más tiempo sin escribir
 ║ • `!setinactividad <días|off>` | `!setinactivity` 👑
